@@ -1,0 +1,50 @@
+syntax="proto3";
+//protocol buffer to transfer the data packet
+package deliveryMgmt;
+
+option go_package="deliverypb";
+
+message DeliveryBoy {
+    string id = 1;
+    string name = 2;
+    string rating = 3;
+    Location location = 4;
+}
+
+message OrderDetails{
+    string orderid = 1;
+    Location restaurantLocation = 2;
+    Location deliveryLocation = 3;
+}
+
+message Location{
+    float latitude = 1;
+    float longitude = 2;
+}
+
+message CreateDeliveryBoyRequest{
+    DeliveryBoy emp = 1;
+}
+message CreateDeliveryBoyResponse{
+    DeliveryBoy emp = 1;
+}
+
+message ReceiveOrederRequest{
+    OrderDetails orderDetails = 1;
+}
+message ReceiveOrederResponse{
+    DeliveryBoy deliveryBoy = 1;
+}
+
+message GetAllDeliveryBoysRequest{
+
+} 
+message GetAllDeliveryBoysResponse{
+    DeliveryBoy deliveryBoy = 1;
+}
+
+service DeliveryService{
+    rpc CreateDeliveryBoy(CreateDeliveryBoyRequest) returns (CreateDeliveryBoyResponse);
+    rpc GetAllDeliveryBoys(GetAllDeliveryBoysRequest) returns (stream GetAllDeliveryBoysResponse);
+    rpc ReceiveOreder(ReceiveOrederRequest) returns (ReceiveOrederResponse);
+}
